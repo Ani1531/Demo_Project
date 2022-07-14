@@ -7,19 +7,11 @@ import {
   Text,
   View,
 } from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeScreen from './HomeScreen';
-import NotificationScreen from './NotificationScreen';
-
-const Drawer = createDrawerNavigator();
+import LoginScreen from './LoginScreen';
 
 const MenuContainer = () => {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Notifications" component={NotificationScreen} />
-    </Drawer.Navigator>
-  );
+  return null;
 };
 
 const styles = StyleSheet.create({

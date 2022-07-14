@@ -3,9 +3,9 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './src/HomeScreen';
-import MenuContainer from './src/MenuContainer';
-import NotificationScreen from './src/NotificationScreen';
+import HomeScreen from './Components/HomeScreen';
+import MenuContainer from './Components/MenuContainer';
+import LoginScreen from './Components/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ class App extends React.Component {
       <Stack.Navigator>
         {this.HomeScreenContainer()}
         {this.MenuContainer()}
-        {this.NotificationScreen()}
+        {this.LoginScreen()}
       </Stack.Navigator>
     );
   }
@@ -39,11 +39,7 @@ class App extends React.Component {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          headerStyle: {
-            backgroundColor: '#48dbfb', //Set Header color
-          },
-          headerShown: true,
-          headerTitleAlign: 'center',
+          headerShown: false,
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
@@ -67,11 +63,11 @@ class App extends React.Component {
     );
   }
 
-  NotificationScreen() {
+  LoginScreen() {
     return (
       <Stack.Screen
-        name="NotificationScreen"
-        component={NotificationScreen}
+        name="LoginScreen"
+        component={LoginScreen}
         options={{
           headerStyle: {
             backgroundColor: '#48dbfb', //Set Header color
@@ -90,18 +86,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'red',
-  },
-  sectionTitle: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
-  },
-  highlight: {
-    fontSize: 32,
-    fontWeight: '700',
   },
 });
 

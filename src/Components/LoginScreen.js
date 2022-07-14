@@ -8,11 +8,11 @@ import {
   View,
 } from 'react-native';
 
-const NotificationScreen = () => {
+const LoginScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
-        <Text>Notification Screen</Text>
+        <Text>Login Screen</Text>
       </View>
     </SafeAreaView>
   );
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationScreen;
+export default LoginScreen;
