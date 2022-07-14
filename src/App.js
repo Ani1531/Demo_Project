@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './Components/HomeScreen';
 import MenuContainer from './Components/MenuContainer';
 import LoginScreen from './Components/LoginScreen';
+import Header from './Components/Header';
 
 const Stack = createStackNavigator();
 
@@ -39,7 +40,12 @@ class App extends React.Component {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          headerShown: false,
+          headerTitle: () => <Header />,
+          headerStyle: {
+            backgroundColor: '#ddd', //Set Header color
+          },
+          headerShown: true,
+          headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
@@ -52,6 +58,7 @@ class App extends React.Component {
         name="MenuContainer"
         component={MenuContainer}
         options={{
+          headerTitle: () => <Header />,
           headerStyle: {
             backgroundColor: '#48dbfb', //Set Header color
           },

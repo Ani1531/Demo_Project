@@ -8,15 +8,18 @@ import {
   View,
 } from 'react-native';
 
-const HomeScreen = () => {
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Text>Home Screen</Text>
-      </View>
-    </SafeAreaView>
-  );
-};
+class HomeScreen extends React.Component {
+  componentDidMount = () => {};
+  render() {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+        <View style={styles.container}>
+          <Text>Home Screen</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {

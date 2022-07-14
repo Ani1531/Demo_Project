@@ -99,9 +99,7 @@ class LoginScreen extends React.Component {
               paddingTop: 4,
               paddingBottom: 8,
             }}>
-            <Text ststyle={{fontSize: 24, fontWeight: 'bold', color: 'black'}}>
-              Sign In
-            </Text>
+            <Text style={{fontSize: 24, color: 'black'}}>Sign In</Text>
           </View>
           {this.renderErrorMgs()}
           {this.renderIDorPasswordInputBox()}
@@ -115,14 +113,18 @@ class LoginScreen extends React.Component {
                 alignSelf: 'flex-end',
                 justifyContent: 'center',
                 margin: 2,
-                padding: 8,
-                backgroundColor: '#0288D1',
+                backgroundColor: '#4e73df',
                 borderRadius: 4,
                 borderWidth: 1,
-                borderColor: '#0288D1',
+                borderColor: '#4e73df',
               }}
               onPress={() => this.onNextPress()}>
-              <View style={{justifyContent: 'center'}}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  padding: 6,
+                  backgroundColor: '#4262be',
+                }}>
                 <FontAwesomeIcon
                   icon={
                     this.state.showPasswordSection ? faUserLock : faUserCircle
@@ -134,21 +136,27 @@ class LoginScreen extends React.Component {
                 style={{
                   justifyContent: 'center',
                   color: 'white',
-                  paddingLeft: 4,
+                  padding: 6,
                 }}>
                 {this.state.showPasswordSection ? 'SignIn' : 'Next'}
               </Text>
             </Pressable>
           </View>
-          <View style={{height: 1, backgroundColor: 'grey'}} />
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 4,
-            }}>
-            <Text style={{fontSize: 10, color: 'black'}}>Forget password</Text>
-          </View>
+          {this.state.showPasswordSection ? (
+            <>
+              <View style={{height: 1, backgroundColor: 'grey'}} />
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: 4,
+                }}>
+                <Text style={{fontSize: 10, color: 'blue'}}>
+                  Forget password!
+                </Text>
+              </View>
+            </>
+          ) : null}
         </View>
       </SafeAreaView>
     );
@@ -163,11 +171,12 @@ const styles = StyleSheet.create({
   },
   loginPopupStyle: {
     marginTop: 80,
-    width: 350,
+    width: 320,
     alignSelf: 'center',
     justifyContent: 'center',
     borderRadius: 4,
-    padding: 18,
+    paddingVertical: 24,
+    paddingHorizontal: 24,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -181,6 +190,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  tinyLogo: {
+    height: 60,
+    width: 150,
   },
 });
 
