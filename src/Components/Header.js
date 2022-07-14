@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-const HomeScreen = () => {
+const Header = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Header;

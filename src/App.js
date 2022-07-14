@@ -26,9 +26,9 @@ class App extends React.Component {
   installNavigator() {
     return (
       <Stack.Navigator>
+        {this.LoginScreen()}
         {this.HomeScreenContainer()}
         {this.MenuContainer()}
-        {this.LoginScreen()}
       </Stack.Navigator>
     );
   }
@@ -72,7 +72,7 @@ class App extends React.Component {
           headerStyle: {
             backgroundColor: '#48dbfb', //Set Header color
           },
-          headerShown: true,
+          headerShown: false,
           headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
         }}
