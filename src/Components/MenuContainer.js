@@ -7,8 +7,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import HomeScreen from './HomeScreen';
-import LoginScreen from './LoginScreen';
+import HomeScreen from '../Screens/HomeScreen';
+import LoginScreen from '../Screens/LoginScreen';
 
 const MenuContainer = () => {
   return null;

@@ -3,9 +3,9 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './Components/HomeScreen';
+import HomeScreen from './Screens/HomeScreen';
 import MenuContainer from './Components/MenuContainer';
-import LoginScreen from './Components/LoginScreen';
+import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 
 const Stack = createStackNavigator();

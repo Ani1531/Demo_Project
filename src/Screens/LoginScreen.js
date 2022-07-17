@@ -21,8 +21,15 @@ class LoginScreen extends React.Component {
       password: '',
       showPasswordSection: false,
       showError: false,
+      showInputSection: false,
     };
   }
+
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({showInputSection: true});
+    }, 1000);
+  };
 
   onValueChange = data => {
     if (this.state.showPasswordSection) {
@@ -92,56 +99,63 @@ class LoginScreen extends React.Component {
               source={require('../assets/logo/snib_logo.png')}
             />
           </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingTop: 4,
-              paddingBottom: 8,
-            }}>
-            <Text style={{fontSize: 24, color: 'black'}}>Sign In</Text>
-          </View>
-          {this.renderErrorMgs()}
-          {this.renderIDorPasswordInputBox()}
-          <View
-            style={{
-              padding: 8,
-            }}>
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignSelf: 'flex-end',
-                justifyContent: 'center',
-                margin: 2,
-                backgroundColor: '#4e73df',
-                borderRadius: 4,
-                borderWidth: 1,
-                borderColor: '#4e73df',
-              }}
-              onPress={() => this.onNextPress()}>
+          {this.state.showInputSection ? (
+            <>
               <View
                 style={{
                   justifyContent: 'center',
-                  padding: 6,
-                  backgroundColor: '#4262be',
+                  alignItems: 'center',
+                  paddingTop: 4,
+                  paddingBottom: 8,
                 }}>
-                <FontAwesomeIcon
-                  icon={
-                    this.state.showPasswordSection ? faUserLock : faUserCircle
-                  }
-                  color={'white'}
-                />
+                <Text style={{fontSize: 20, color: 'black'}}>Sign In</Text>
               </View>
-              <Text
+              {this.renderErrorMgs()}
+              {this.renderIDorPasswordInputBox()}
+              <View
                 style={{
-                  justifyContent: 'center',
-                  color: 'white',
-                  padding: 6,
+                  paddingHorizontal: 12,
+                  paddingVertical: 16,
                 }}>
-                {this.state.showPasswordSection ? 'SignIn' : 'Next'}
-              </Text>
-            </Pressable>
-          </View>
+                <Pressable
+                  style={{
+                    flexDirection: 'row',
+                    alignSelf: 'flex-end',
+                    justifyContent: 'center',
+                    margin: 2,
+                    backgroundColor: '#4e73df',
+                    borderRadius: 4,
+                    borderWidth: 1,
+                    borderColor: '#4e73df',
+                  }}
+                  onPress={() => this.onNextPress()}>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      padding: 6,
+                      backgroundColor: '#4262be',
+                    }}>
+                    <FontAwesomeIcon
+                      icon={
+                        this.state.showPasswordSection
+                          ? faUserLock
+                          : faUserCircle
+                      }
+                      color={'white'}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      justifyContent: 'center',
+                      color: 'white',
+                      padding: 6,
+                    }}>
+                    {this.state.showPasswordSection ? 'SignIn' : 'Next'}
+                  </Text>
+                </Pressable>
+              </View>
+            </>
+          ) : null}
           {this.state.showPasswordSection ? (
             <>
               <View style={{height: 1, backgroundColor: 'grey'}} />
@@ -149,7 +163,8 @@ class LoginScreen extends React.Component {
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: 4,
+                  paddingHorizontal: 12,
+                  paddingVertical: 16,
                 }}>
                 <Text style={{fontSize: 10, color: 'blue'}}>
                   Forget password!
@@ -168,32 +183,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: '#dfe6e9',
   },
   loginPopupStyle: {
-    marginTop: 80,
-    width: 320,
+    marginTop: 180,
+    // width: 320,
     alignSelf: 'center',
     justifyContent: 'center',
-    borderRadius: 4,
-    paddingVertical: 32,
-    paddingHorizontal: 24,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1,
-    elevation: 5,
+    backgroundColor: '#dfe6e9',
+    // borderRadius: 4,
+    // paddingVertical: 32,
+    // paddingHorizontal: 24,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 1,
+    // elevation: 5,
   },
   input: {
     height: 40,
-    margin: 12,
+    margin: 16,
     borderWidth: 1,
-    padding: 10,
+    paddingHorizontal: 16,
   },
   tinyLogo: {
-    height: 60,
-    width: 150,
+    height: 80,
+    width: 180,
   },
 });
 
