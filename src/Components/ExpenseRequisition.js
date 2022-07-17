@@ -1,4 +1,3 @@
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {
   StyleSheet,
@@ -9,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-native-date-picker';
 const AccountData = [
@@ -32,7 +32,7 @@ class ExpenseRequisition extends React.Component {
         }}
         defaultButtonText={'Department'}
         search={true}
-        buttonStyle={{borderWidth: 1, width: '100%', height: 40}}
+        buttonStyle={{borderWidth: 1, width: '100%', height: 50}}
         renderDropdownIcon={() => (
           <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
         )}
@@ -55,7 +55,7 @@ class ExpenseRequisition extends React.Component {
         }}
         defaultButtonText={'Vertical'}
         search={true}
-        buttonStyle={{borderWidth: 1, width: '75%', height: 40}}
+        buttonStyle={{borderWidth: 1, width: '75%', height: 50}}
         renderDropdownIcon={() => (
           <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
         )}
@@ -78,7 +78,7 @@ class ExpenseRequisition extends React.Component {
         }}
         defaultButtonText={'State'}
         search={true}
-        buttonStyle={{borderWidth: 1, width: '75%', height: 40}}
+        buttonStyle={{borderWidth: 1, width: '75%', height: 50}}
         renderDropdownIcon={() => (
           <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
         )}
@@ -101,7 +101,7 @@ class ExpenseRequisition extends React.Component {
         }}
         defaultButtonText={'Empolyee Responsible'}
         search={true}
-        buttonStyle={{borderWidth: 1, width: '100%', height: 40}}
+        buttonStyle={{borderWidth: 1, width: '100%', height: 50}}
         renderDropdownIcon={() => (
           <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
         )}
@@ -118,75 +118,57 @@ class ExpenseRequisition extends React.Component {
   render() {
     return (
       <View styles={styles.container}>
-        <View
-          style={{
-            paddingHorizontal: 12,
-            paddingVertical: 4,
-            width: '100%',
-            height: 50,
-            justifyContent: 'center',
-            backgroundColor: '#e3e6f0',
-            borderWidth: 0.5,
-          }}>
-          <Text style={{textAlign: 'center'}}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleStyle}>
             Expense Requisition - Preparation
           </Text>
         </View>
         <ScrollView style={{flexShrink: 1}}>
-          <View
-            style={{
-              paddingHorizontal: 12,
-              paddingVertical: 4,
-              width: '100%',
-              marginBottom: 50,
-            }}>
+          <View style={styles.eachFeildeStyle}>
             <View style={{paddingHorizontal: 4}}>
-              <Text style={{paddingHorizontal: 10}}>Requisition No</Text>
+              <Text
+                style={{paddingHorizontal: 10, fontSize: 16, color: 'black'}}>
+                Requisition No
+              </Text>
               <TextInput
                 style={styles.input}
                 value={''}
                 onChangeText={value => console.log('someting chnage')}
               />
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-between',
-                paddingHorizontal: 12,
-              }}>
-              <View style={{paddingHorizontal: 4}}>
-                <Text style={{paddingVertical: 4, paddingBottom: 6}}>
-                  Requisition Date
-                </Text>
+            <View style={{paddingHorizontal: 4}}>
+              <Text
+                style={{
+                  paddingVertical: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
+                Requisition Date
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={''}
+                onChangeText={value => console.log('someting chnage')}
+              />
+            </View>
+            <View style={{paddingHorizontal: 4}}>
+              <Text
+                style={{
+                  paddingVertical: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
+                For The Date
+              </Text>
+              <Pressable>
                 <TextInput
-                  style={{
-                    height: 30,
-                    width: 120,
-                    borderWidth: 1,
-                    padding: 10,
-                  }}
+                  style={styles.input}
                   value={''}
                   onChangeText={value => console.log('someting chnage')}
                 />
-              </View>
-              <View style={{paddingHorizontal: 4}}>
-                <Text style={{paddingVertical: 4, paddingBottom: 6}}>
-                  For The Date
-                </Text>
-                <Pressable>
-                  <TextInput
-                    style={{
-                      height: 30,
-                      width: 120,
-                      borderWidth: 1,
-                      padding: 10,
-                    }}
-                    value={''}
-                    onChangeText={value => console.log('someting chnage')}
-                  />
-                </Pressable>
-              </View>
+              </Pressable>
             </View>
             <View
               style={{
@@ -195,7 +177,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingTop: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 Department
               </Text>
               {this.renderDropDown()}
@@ -207,7 +195,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingVertical: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 State
               </Text>
               {this.renderStateDropDown()}
@@ -219,7 +213,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingVertical: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 Vertical
               </Text>
               {this.renderVerticalDropDown()}
@@ -231,7 +231,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingVertical: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 Employee Responsibible
               </Text>
               {this.renderEmployeeDropDown()}
@@ -243,7 +249,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingVertical: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 Vendor
               </Text>
               {this.renderEmployeeDropDown()}
@@ -255,7 +267,13 @@ class ExpenseRequisition extends React.Component {
                 paddingHorizontal: 12,
                 paddingVertical: 12,
               }}>
-              <Text style={{paddingHorizontal: 4, paddingBottom: 6}}>
+              <Text
+                style={{
+                  paddingHorizontal: 4,
+                  paddingBottom: 6,
+                  fontSize: 16,
+                  color: 'black',
+                }}>
                 Client
               </Text>
               {this.renderEmployeeDropDown()}
@@ -273,8 +291,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleContainer: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    backgroundColor: '#e3e6f0',
+    borderWidth: 0.5,
+  },
+  titleStyle: {
+    textAlign: 'center',
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  eachFeildeStyle: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    width: '100%',
+    marginBottom: 50,
+  },
   input: {
-    height: 40,
+    height: 50,
     margin: 12,
     borderWidth: 1,
     padding: 10,

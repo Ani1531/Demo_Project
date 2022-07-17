@@ -43,7 +43,7 @@ class LoginScreen extends React.Component {
     if (this.state.userId == 'manoj') {
       this.setState({showPasswordSection: true, userId: '', password: ''});
     } else if (this.state.password == 'manoj') {
-      this.props.navigation.navigate('HomeScreen');
+      this.props.navigation.navigate('MenuContainer');
     } else {
       this.setState({showError: true, userId: '', password: ''});
     }
@@ -108,7 +108,7 @@ class LoginScreen extends React.Component {
                   paddingTop: 4,
                   paddingBottom: 8,
                 }}>
-                <Text style={{fontSize: 20, color: 'black'}}>Sign In</Text>
+                <Text style={{fontSize: 22, color: 'black'}}>Sign In</Text>
               </View>
               {this.renderErrorMgs()}
               {this.renderIDorPasswordInputBox()}
@@ -149,6 +149,7 @@ class LoginScreen extends React.Component {
                       justifyContent: 'center',
                       color: 'white',
                       padding: 6,
+                      fontSize: 22,
                     }}>
                     {this.state.showPasswordSection ? 'SignIn' : 'Next'}
                   </Text>
@@ -166,7 +167,7 @@ class LoginScreen extends React.Component {
                   paddingHorizontal: 12,
                   paddingVertical: 16,
                 }}>
-                <Text style={{fontSize: 10, color: 'blue'}}>
+                <Text style={{fontSize: 22, color: 'blue'}}>
                   Forget password!
                 </Text>
               </View>
@@ -203,14 +204,15 @@ const styles = StyleSheet.create({
     // elevation: 5,
   },
   input: {
-    height: 40,
-    margin: 16,
+    height: 50,
+    margin: 20,
     borderWidth: 1,
     paddingHorizontal: 16,
+    fontSize: 20,
   },
   tinyLogo: {
-    height: 80,
-    width: 180,
+    height: 90,
+    width: 210,
   },
 });
 
