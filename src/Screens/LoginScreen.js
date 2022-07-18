@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -29,6 +30,22 @@ class LoginScreen extends React.Component {
     setTimeout(() => {
       this.setState({showInputSection: true});
     }, 1000);
+
+    axios
+      .post({
+        method: 'post',
+        url: 'http://localhost:8000/api/user/login',
+        body: JSON.stringify({
+          loginId: 'manoj',
+          password: 'manoj',
+        }),
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
   };
 
   onValueChange = data => {
@@ -57,7 +74,7 @@ class LoginScreen extends React.Component {
           alignItems: 'center',
           padding: 4,
         }}>
-        <Text style={{fontSize: 10, color: 'red'}}>
+        <Text style={{fontSize: 16, color: 'red'}}>
           INVALID USER ID AND PASSWORD
         </Text>
       </View>
