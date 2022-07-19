@@ -19,7 +19,6 @@ class App extends React.Component {
   }
 
   getProfileIcon = () => {
-    console.log('NAVIGATION', JSON.stringify(this.props));
     return (
       <Pressable
         style={{
@@ -44,7 +43,7 @@ class App extends React.Component {
   installNavigator() {
     return (
       <Stack.Navigator>
-        {this.LoginScreen()}
+        {/* {this.LoginScreen()} */}
         {this.MenuContainer()}
         {this.ProfileScreen()}
       </Stack.Navigator>

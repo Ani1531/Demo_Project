@@ -30,22 +30,6 @@ class LoginScreen extends React.Component {
     setTimeout(() => {
       this.setState({showInputSection: true});
     }, 1000);
-
-    axios
-      .post({
-        method: 'post',
-        url: 'http://localhost:8000/api/user/login',
-        body: JSON.stringify({
-          loginId: 'manoj',
-          password: 'manoj',
-        }),
-      })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log('error', error);
-      });
   };
 
   onValueChange = data => {

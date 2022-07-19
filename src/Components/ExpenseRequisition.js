@@ -7,10 +7,9 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-native-date-picker';
+import DatePickerView from './DatePickerView';
+import SelectDropDown from './SelectDropDown';
+
 const AccountData = [
   'Accounts - Cash & Bank',
   'Accounts - Something 001',
@@ -23,96 +22,20 @@ const StateData = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 const VerticalData = ['Admin', 'Banking - ATM', 'Banking - CACP'];
 
 class ExpenseRequisition extends React.Component {
-  renderDropDown = () => {
-    return (
-      <SelectDropdown
-        data={AccountData}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
-        defaultButtonText={'Department'}
-        search={true}
-        buttonStyle={{borderWidth: 1, width: '100%', height: 50}}
-        renderDropdownIcon={() => (
-          <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
-        )}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-      />
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      showDatePicker: false,
+      dateData: new Date(),
+    };
+  }
+
+  openDatePicker = () => {
+    this.setState({showDatePicker: !this.state.showDatePicker});
   };
 
-  renderVerticalDropDown = () => {
-    return (
-      <SelectDropdown
-        data={VerticalData}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
-        defaultButtonText={'Vertical'}
-        search={true}
-        buttonStyle={{borderWidth: 1, width: '75%', height: 50}}
-        renderDropdownIcon={() => (
-          <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
-        )}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-      />
-    );
-  };
-
-  renderStateDropDown = () => {
-    return (
-      <SelectDropdown
-        data={StateData}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
-        defaultButtonText={'State'}
-        search={true}
-        buttonStyle={{borderWidth: 1, width: '75%', height: 50}}
-        renderDropdownIcon={() => (
-          <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
-        )}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-      />
-    );
-  };
-
-  renderEmployeeDropDown = () => {
-    return (
-      <SelectDropdown
-        data={StateData}
-        onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index);
-        }}
-        defaultButtonText={'Empolyee Responsible'}
-        search={true}
-        buttonStyle={{borderWidth: 1, width: '100%', height: 50}}
-        renderDropdownIcon={() => (
-          <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
-        )}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item, index) => {
-          return item;
-        }}
-      />
-    );
+  onDateChange = newDate => {
+    this.setState({date: newDate, showDatePicker: false});
   };
 
   render() {
@@ -139,6 +62,7 @@ class ExpenseRequisition extends React.Component {
             <View style={{paddingHorizontal: 4}}>
               <Text
                 style={{
+                  paddingHorizontal: 10,
                   paddingVertical: 4,
                   paddingBottom: 6,
                   fontSize: 16,
@@ -155,6 +79,7 @@ class ExpenseRequisition extends React.Component {
             <View style={{paddingHorizontal: 4}}>
               <Text
                 style={{
+                  paddingHorizontal: 10,
                   paddingVertical: 4,
                   paddingBottom: 6,
                   fontSize: 16,
@@ -162,13 +87,12 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 For The Date
               </Text>
-              <Pressable>
-                <TextInput
-                  style={styles.input}
-                  value={''}
-                  onChangeText={value => console.log('someting chnage')}
-                />
-              </Pressable>
+              <DatePickerView
+                openDatePicker={this.openDatePicker}
+                showDatePicker={this.state.showDatePicker}
+                dateData={this.state.dateData}
+                onDateChange={this.onDateChange}
+              />
             </View>
             <View
               style={{
@@ -186,7 +110,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 Department
               </Text>
-              {this.renderDropDown()}
+              <SelectDropDown
+                DATA={AccountData}
+                ButtonTitle={'Department'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
             <View
               style={{
@@ -204,7 +132,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 State
               </Text>
-              {this.renderStateDropDown()}
+              <SelectDropDown
+                DATA={StateData}
+                ButtonTitle={'State'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
             <View
               style={{
@@ -222,7 +154,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 Vertical
               </Text>
-              {this.renderVerticalDropDown()}
+              <SelectDropDown
+                DATA={VerticalData}
+                ButtonTitle={'Vertical'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
             <View
               style={{
@@ -240,7 +176,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 Employee Responsibible
               </Text>
-              {this.renderEmployeeDropDown()}
+              <SelectDropDown
+                DATA={StateData}
+                ButtonTitle={'Employee'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
             <View
               style={{
@@ -258,7 +198,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 Vendor
               </Text>
-              {this.renderEmployeeDropDown()}
+              <SelectDropDown
+                DATA={StateData}
+                ButtonTitle={'State'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
             <View
               style={{
@@ -276,7 +220,11 @@ class ExpenseRequisition extends React.Component {
                 }}>
                 Client
               </Text>
-              {this.renderEmployeeDropDown()}
+              <SelectDropDown
+                DATA={StateData}
+                ButtonTitle={'State'}
+                dropdownStyle={{borderWidth: 1, width: '100%', height: 50}}
+              />
             </View>
           </View>
         </ScrollView>
