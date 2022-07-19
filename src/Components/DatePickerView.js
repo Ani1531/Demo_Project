@@ -1,47 +1,35 @@
-// import React from 'react';
-// import {StyleSheet} from 'react-native';
-// import DatePicker from 'react-native-date-picker';
-// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-// import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-
-// class DatePickerView extends React.Component {
-//   render() {
-//     return (
-//       <DatePicker
-//         modal
-//         open={this.props.showDatePicker()}
-//         date={this.props.dateData}
-//         onConfirm={date => {
-//           this.props.onDateChange(date);
-//         }}
-//         onCancel={() => {
-//           this.props.showDatePicker();
-//         }}
-//       />
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({});
-
-// export default DatePickerView;
-
-import React, {useState} from 'react';
-import {TextInput, StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import {TextInput, StyleSheet, View, Text, Pressable} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faCalendar} from '@fortawesome/free-solid-svg-icons';
+import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
 
 export default class DatePickerView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dateInput: this.props.dateData,
+    };
+  }
+
+  onDateChange = newDate => {
+    this.setState({dateInput: newDate});
+    this.props.onDateChange(newDate);
+  };
   render() {
     return (
-      <View style={styles.input}>
+      <View style={styles.mainStyle}>
         <TextInput
           style={styles.input}
-          value={this.props.dateData}
+          value={this.state.dateInput.toString()}
           onChangeText={value => console.log('someting chnage')}
         />
-        <FontAwesomeIcon size={16} icon={faCalendar} color={'blue'} />
+        <Pressable
+          onPress={() => {
+            this.props.openDatePicker();
+          }}>
+          <FontAwesomeIcon size={44} icon={faCalendarAlt} color={'#74b9ff'} />
+        </Pressable>
         <DatePicker
           modal
           open={this.props.showDatePicker}
@@ -60,8 +48,13 @@ export default class DatePickerView extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  input: {
+  mainStyle: {
+    height: 50,
+    flexDirection: 'row',
+    margin: 12,
     borderWidth: 1,
-    borderColor: 'red',
+  },
+  input: {
+    width: '90%',
   },
 });
