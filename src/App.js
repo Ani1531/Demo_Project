@@ -18,20 +18,6 @@ class App extends React.Component {
     this.state = {};
   }
 
-  getProfileIcon = () => {
-    return (
-      <Pressable
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-          padding: 8,
-        }}
-        onPress={() => console.log('open profile')}>
-        <FontAwesomeIcon size={28} icon={faUserCircle} color={'blue'} />
-      </Pressable>
-    );
-  };
-
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -74,8 +60,6 @@ class App extends React.Component {
           headerStyle: {
             backgroundColor: 'white', //Set Header color
           },
-          headerLeft: null,
-          headerRight: () => this.getProfileIcon(),
           headerShown: true,
           headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
@@ -94,8 +78,6 @@ class App extends React.Component {
           headerStyle: {
             backgroundColor: 'white', //Set Header color
           },
-          headerLeft: null,
-          headerRight: () => this.getProfileIcon(),
           headerShown: true,
           headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
