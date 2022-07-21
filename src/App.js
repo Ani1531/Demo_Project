@@ -9,6 +9,8 @@ import MenuContainer from './Components/MenuContainer';
 import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 import ProfileScreen from './Screens/ProfileScreen';
+import {Provider} from 'react-redux';
+import {Store} from './Redux/Store';
 
 const Stack = createStackNavigator();
 
@@ -20,16 +22,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer>{this.installNavigator()}</NavigationContainer>
-      </SafeAreaView>
+      <Provider store={Store}>
+        <SafeAreaView style={styles.container}>
+          <NavigationContainer>{this.installNavigator()}</NavigationContainer>
+        </SafeAreaView>
+      </Provider>
     );
   }
 
   installNavigator() {
     return (
       <Stack.Navigator>
-        {/* {this.LoginScreen()} */}
+        {this.LoginScreen()}
         {this.MenuContainer()}
         {this.ProfileScreen()}
       </Stack.Navigator>

@@ -13,6 +13,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import LoaderSpinner from '../Components/LoaderSpinner';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -20,8 +21,8 @@ class LoginScreen extends React.Component {
     this.state = {
       userId: '',
       password: '',
-      showPasswordSection: false,
       showError: false,
+      errormgs: 'INVALID USER ID AND PASSWORD',
       showInputSection: false,
     };
   }
@@ -32,22 +33,63 @@ class LoginScreen extends React.Component {
     }, 1000);
   };
 
-  onValueChange = data => {
-    if (this.state.showPasswordSection) {
-      this.setState({password: data, showError: false});
+  onUserIdValueChange = data => {
+    this.setState({userId: data, showError: false});
+  };
+
+  onPasswordValueChange = data => {
+    this.setState({password: data, showError: false});
+  };
+
+  onSignInPress = () => {
+    if (this.state.userId == 'manoj' && this.state.password == 'manoj') {
+      this.props.navigation.navigate('MenuContainer');
+    } else if (this.state.userId == '' || this.state.password == '') {
+      this.setState({
+        showError: true,
+        errormgs: 'PLEASE ENTER THE FEILDS',
+        userId: '',
+        password: '',
+      });
     } else {
-      this.setState({userId: data, showError: false});
+      this.setState({
+        showError: true,
+        errormgs: 'INVALID USER ID AND PASSWORD',
+        userId: '',
+        password: '',
+      });
     }
   };
 
-  onNextPress = () => {
-    if (this.state.userId == 'manoj') {
-      this.setState({showPasswordSection: true, userId: '', password: ''});
-    } else if (this.state.password == 'manoj') {
-      this.props.navigation.navigate('MenuContainer');
-    } else {
-      this.setState({showError: true, userId: '', password: ''});
-    }
+  renderIDorPasswordInputBox = () => {
+    return (
+      <>
+        <View style={{paddingVertical: 12}}>
+          <Text style={{fontSize: 22, color: 'black', paddingLeft: 12}}>
+            User Id
+          </Text>
+          <TextInput
+            style={styles.input}
+            // autoFocus={true}
+            value={this.state.userId}
+            onChangeText={value => this.onUserIdValueChange(value)}
+            placeholder="Please Enter Valid User ID"
+          />
+        </View>
+        <View>
+          <Text style={{fontSize: 22, color: 'black', paddingLeft: 12}}>
+            Password
+          </Text>
+          <TextInput
+            style={styles.input}
+            // autoFocus={true}
+            value={this.state.password}
+            onChangeText={value => this.onPasswordValueChange(value)}
+            placeholder="Please Enter Password"
+          />
+        </View>
+      </>
+    );
   };
 
   renderErrorMgs = () => {
@@ -58,123 +100,90 @@ class LoginScreen extends React.Component {
           alignItems: 'center',
           padding: 4,
         }}>
-        <Text style={{fontSize: 16, color: 'red'}}>
-          INVALID USER ID AND PASSWORD
-        </Text>
+        <Text style={{fontSize: 20, color: 'red'}}>{this.state.errormgs}</Text>
       </View>
     ) : null;
-  };
-
-  renderIDorPasswordInputBox = () => {
-    return this.state.showPasswordSection ? (
-      <TextInput
-        style={styles.input}
-        // autoFocus={true}
-        value={this.state.password}
-        onChangeText={value => this.onValueChange(value)}
-        placeholder="Please Enter Password"
-      />
-    ) : (
-      <TextInput
-        style={styles.input}
-        // autoFocus={true}
-        value={this.state.userId}
-        onChangeText={value => this.onValueChange(value)}
-        placeholder="Please Enter Valid User ID"
-      />
-    );
   };
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.loginPopupStyle}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: 4,
-            }}>
-            <Image
-              style={styles.tinyLogo}
-              source={require('../assets/logo/snib_logo.png')}
-            />
-          </View>
-          {this.state.showInputSection ? (
-            <>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingTop: 4,
-                  paddingBottom: 8,
-                }}>
-                <Text style={{fontSize: 22, color: 'black'}}>Sign In</Text>
-              </View>
-              {this.renderErrorMgs()}
-              {this.renderIDorPasswordInputBox()}
-              <View
-                style={{
-                  paddingHorizontal: 12,
-                  paddingVertical: 16,
-                }}>
-                <Pressable
-                  style={{
-                    flexDirection: 'row',
-                    alignSelf: 'flex-end',
-                    justifyContent: 'center',
-                    margin: 2,
-                    backgroundColor: '#4e73df',
-                    borderRadius: 4,
-                    borderWidth: 1,
-                    borderColor: '#4e73df',
-                  }}
-                  onPress={() => this.onNextPress()}>
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      padding: 6,
-                      backgroundColor: '#4262be',
-                    }}>
-                    <FontAwesomeIcon
-                      icon={
-                        this.state.showPasswordSection
-                          ? faUserLock
-                          : faUserCircle
-                      }
-                      color={'white'}
-                    />
-                  </View>
-                  <Text
-                    style={{
-                      justifyContent: 'center',
-                      color: 'white',
-                      padding: 6,
-                      fontSize: 22,
-                    }}>
-                    {this.state.showPasswordSection ? 'SignIn' : 'Next'}
-                  </Text>
-                </Pressable>
-              </View>
-            </>
-          ) : null}
-          {this.state.showPasswordSection ? (
-            <>
-              <View style={{height: 1, backgroundColor: 'grey'}} />
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingHorizontal: 12,
-                  paddingVertical: 16,
-                }}>
-                <Text style={{fontSize: 22, color: 'blue'}}>
-                  Forget password!
-                </Text>
-              </View>
-            </>
-          ) : null}
+        <LoaderSpinner />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 4,
+          }}>
+          <Image
+            style={styles.tinyLogo}
+            source={require('../assets/logo/snib_logo.png')}
+          />
         </View>
+        {this.state.showInputSection ? (
+          <>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginVertical: 8,
+              }}>
+              <Text style={{fontSize: 26, color: 'black'}}>Sign In</Text>
+            </View>
+            {this.renderErrorMgs()}
+            {this.renderIDorPasswordInputBox()}
+            <View
+              style={{
+                width: 280,
+                paddingTop: 20,
+                paddingVertical: 16,
+              }}>
+              <Pressable
+                style={{
+                  flexDirection: 'row',
+                  alignSelf: 'flex-end',
+                  justifyContent: 'center',
+                  margin: 2,
+                  backgroundColor: '#4e73df',
+                  borderRadius: 4,
+                  borderWidth: 1,
+                  borderColor: '#4e73df',
+                }}
+                onPress={() => this.onSignInPress()}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    padding: 6,
+                    backgroundColor: '#4262be',
+                    alignItems: 'flex-end',
+                  }}>
+                  <FontAwesomeIcon icon={faUserCircle} color={'white'} />
+                </View>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    color: 'white',
+                    padding: 6,
+                    fontSize: 22,
+                  }}>
+                  {'SignIn'}
+                </Text>
+              </Pressable>
+            </View>
+            <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: 12,
+                paddingVertical: 16,
+              }}>
+              <Text style={{fontSize: 22, color: 'blue'}}>
+                Forget password!
+              </Text>
+            </View>
+          </>
+        ) : null}
       </SafeAreaView>
     );
   }
@@ -186,34 +195,19 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#dfe6e9',
-  },
-  loginPopupStyle: {
-    marginTop: 180,
-    // width: 320,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#dfe6e9',
-    // borderRadius: 4,
-    // paddingVertical: 32,
-    // paddingHorizontal: 24,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 1,
-    // elevation: 5,
+    paddingTop: 100,
   },
   input: {
+    width: 280,
     height: 50,
-    margin: 20,
+    margin: 10,
     borderWidth: 1,
     paddingHorizontal: 16,
     fontSize: 20,
   },
   tinyLogo: {
-    height: 90,
-    width: 210,
+    height: 120,
+    width: 250,
   },
 });
 
