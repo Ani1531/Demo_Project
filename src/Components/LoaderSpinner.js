@@ -6,7 +6,6 @@ import {StyleSheet} from 'react-native';
 
 class LoaderSpinner extends React.Component {
   render() {
-    console.log(this.props.LoaderReducer.showSpinner);
     return (
       <Modal
         animationType="fade"

@@ -35,7 +35,7 @@ class LoginScreen extends React.Component {
   componentDidMount = () => {
     Animated.timing(this.fadeAnim, {
       toValue: 1,
-      duration: 600,
+      duration: 700,
       useNativeDriver: true,
     }).start();
   };

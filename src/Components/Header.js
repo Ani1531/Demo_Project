@@ -1,20 +1,28 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import {StyleSheet} from 'react-native';
 
 const Header = () => {
   return (
-    <Image
-      style={styles.tinyLogo}
-      source={require('../assets/logo/snib_logo.png')}
-    />
+    <View style={styles.logoContainerStyle}>
+      <Image
+        style={styles.tinyLogo}
+        source={require('../assets/logo/snib_logo.png')}
+        resizeMode="contain"
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  logoContainerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   tinyLogo: {
-    width: 100,
-    height: 50,
+    width: 150,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
