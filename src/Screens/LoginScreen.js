@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import LoaderSpinner from '../Components/LoaderSpinner';
 import {setBusy, setFree} from '../Redux/Action';
 
@@ -48,27 +47,54 @@ class LoginScreen extends React.Component {
     this.setState({password: data, showError: false});
   };
 
+  checkLogin = () => {
+    let loginData = {
+      loginId: this.state.userId,
+      password: this.state.password,
+    };
+    console.log('fetch data');
+    fetch('http://192.168.29.9:8001/api/user/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginData),
+    })
+      .then(res => res.json())
+      .then(result => {
+        let userData = result.data.user;
+        if (userData.login_user_name != 'Error') {
+          this.props.navigation.navigate('MenuContainer');
+        } else {
+          this.setState({
+            showError: true,
+            errormgs: 'INVALID USER ID AND PASSWORD',
+            userId: '',
+            password: '',
+          });
+        }
+        console.log(JSON.stringify(data));
+      this.props.setFree();
+      })
+      .catch(function (error) {
+      this.props.setFree();
+        console.log('error', error);
+      });
+  };
+
   onSignInPress = () => {
+    
     this.props.setBusy();
-    if (this.state.userId == 'manoj' && this.state.password == 'manoj') {
-      this.props.setFree();
-      this.props.navigation.navigate('DashBoardScreen');
-    } else if (this.state.userId == '' || this.state.password == '') {
-      this.props.setFree();
+    if (this.state.userId == '' || this.state.password == '') {
       this.setState({
         showError: true,
         errormgs: 'PLEASE ENTER THE FEILDS',
         userId: '',
         password: '',
       });
-    } else {
       this.props.setFree();
-      this.setState({
-        showError: true,
-        errormgs: 'INVALID USER ID AND PASSWORD',
-        userId: '',
-        password: '',
-      });
+    } else {
+      this.checkLogin();
     }
   };
 
@@ -111,7 +137,7 @@ class LoginScreen extends React.Component {
           alignItems: 'center',
           padding: 4,
         }}>
-        <Text style={{fontSize: 20, color: 'red'}}>{this.state.errormgs}</Text>
+        <Text style={{fontSize: 16, color: 'red'}}>{this.state.errormgs}</Text>
       </View>
     ) : null;
   };
@@ -186,7 +212,7 @@ class LoginScreen extends React.Component {
               justifyContent: 'center',
               alignItems: 'center',
               paddingHorizontal: 12,
-              paddingVertical: 16,
+              // paddingVertical: 16,
             }}>
             <Text style={{fontSize: 22, color: 'blue'}}>Forget password!</Text>
           </View>

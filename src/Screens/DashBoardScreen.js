@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     marginVertical: 8,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
   },
   tab2Style: {
     marginHorizontal: 8,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     marginVertical: 8,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
   },
 });
 
