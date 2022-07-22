@@ -52,7 +52,7 @@ class LoginScreen extends React.Component {
     this.props.setBusy();
     if (this.state.userId == 'manoj' && this.state.password == 'manoj') {
       this.props.setFree();
-      this.props.navigation.navigate('MenuContainer');
+      this.props.navigation.navigate('DashBoardScreen');
     } else if (this.state.userId == '' || this.state.password == '') {
       this.props.setFree();
       this.setState({
