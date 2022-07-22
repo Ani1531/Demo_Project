@@ -29,8 +29,9 @@ class DashBoardScreen extends React.Component {
   };
 
   renderSubTabBars = () => {
-    return this.state.showSubmenu2
-      ? this.state.submenu2Type.map((item, key) => (
+    return this.state.showSubmenu2 ? (
+      <View style={styles.subMenu}>
+        {this.state.submenu2Type.map((item, key) => (
           <Pressable
             key={key}
             style={styles.tab2Style}
@@ -39,8 +40,9 @@ class DashBoardScreen extends React.Component {
             }}>
             <Text style={styles.tab2TextStyle}>{item}</Text>
           </Pressable>
-        ))
-      : null;
+        ))}
+      </View>
+    ) : null;
   };
 
   render() {
@@ -54,10 +56,8 @@ class DashBoardScreen extends React.Component {
           <Text style={styles.dashTitle}>DASH BOARD</Text>
         </Pressable>
         <View style={styles.subMenu}>{this.renderTabBars()}</View>
-        <View
-          style={{height: 12, backgroundColor: 'rgba(245, 246, 250,1.0)'}}
-        />
-        <View style={styles.subMenu}>{this.renderSubTabBars()}</View>
+        <View style={{height: 12}} />
+        {this.renderSubTabBars()}
       </View>
     );
   }
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    backgroundColor: 'rgba(223, 230, 233,0.6)',
   },
   dashboardStyle: {
     width: '100%',
