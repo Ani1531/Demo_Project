@@ -52,7 +52,6 @@ class LoginScreen extends React.Component {
       loginId: this.state.userId,
       password: this.state.password,
     };
-    console.log('fetch data');
     fetch('http://192.168.29.9:8001/api/user/login', {
       method: 'post',
       headers: {
@@ -64,35 +63,40 @@ class LoginScreen extends React.Component {
       .then(result => {
         let userData = result.data.user;
         if (userData.login_user_name != 'Error') {
-          this.props.navigation.navigate('MenuContainer');
+          this.props.setFree();
+          this.props.navigation.navigate('DashBoardScreen');
         } else {
-          this.setState({
-            showError: true,
-            errormgs: 'INVALID USER ID AND PASSWORD',
-            userId: '',
-            password: '',
-          });
+          this.setState(
+            {
+              showError: true,
+              errormgs: 'INVALID USER ID AND PASSWORD',
+              userId: '',
+              password: '',
+            },
+            () => this.props.setFree(),
+          );
         }
-        console.log(JSON.stringify(data));
-      this.props.setFree();
       })
       .catch(function (error) {
-      this.props.setFree();
+        this.props.setFree();
         console.log('error', error);
       });
   };
 
   onSignInPress = () => {
-    
     this.props.setBusy();
     if (this.state.userId == '' || this.state.password == '') {
-      this.setState({
-        showError: true,
-        errormgs: 'PLEASE ENTER THE FEILDS',
-        userId: '',
-        password: '',
-      });
-      this.props.setFree();
+      this.setState(
+        {
+          showError: true,
+          errormgs: 'PLEASE ENTER THE FEILDS',
+          userId: '',
+          password: '',
+        },
+        () => {
+          this.props.setFree();
+        },
+      );
     } else {
       this.checkLogin();
     }
@@ -120,6 +124,7 @@ class LoginScreen extends React.Component {
           <TextInput
             style={styles.input}
             // autoFocus={true}
+            secureTextEntry={true}
             value={this.state.password}
             onChangeText={value => this.onPasswordValueChange(value)}
             placeholder="Please Enter Password"
@@ -144,80 +149,84 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <LoaderSpinner />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: 4,
-          }}>
-          <Image
-            style={styles.tinyLogo}
-            source={require('../assets/logo/snib_logo.png')}
-          />
-        </View>
-        <Animated.View style={[{opacity: this.fadeAnim}]}>
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <LoaderSpinner />
           <View
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-              marginVertical: 8,
+              paddingVertical: 4,
             }}>
-            <Text style={{fontSize: 26, color: 'black'}}>Sign In</Text>
+            <Image
+              style={styles.tinyLogo}
+              source={require('../assets/logo/snib_logo.png')}
+            />
           </View>
-          {this.renderErrorMgs()}
-          {this.renderIDorPasswordInputBox()}
-          <View
-            style={{
-              width: 280,
-              paddingTop: 20,
-              paddingVertical: 16,
-            }}>
-            <Pressable
+          <Animated.View style={[{opacity: this.fadeAnim}]}>
+            <View
               style={{
-                flexDirection: 'row',
-                alignSelf: 'flex-end',
                 justifyContent: 'center',
-                margin: 2,
-                backgroundColor: '#4e73df',
-                borderRadius: 4,
-                borderWidth: 1,
-                borderColor: '#4e73df',
-              }}
-              onPress={() => this.onSignInPress()}>
-              <View
+                alignItems: 'center',
+                marginVertical: 8,
+              }}>
+              <Text style={{fontSize: 26, color: 'black'}}>Sign In</Text>
+            </View>
+            {this.renderErrorMgs()}
+            {this.renderIDorPasswordInputBox()}
+            <View
+              style={{
+                width: 280,
+                paddingTop: 20,
+                paddingVertical: 16,
+              }}>
+              <Pressable
                 style={{
+                  flexDirection: 'row',
+                  alignSelf: 'flex-end',
                   justifyContent: 'center',
-                  padding: 6,
-                  backgroundColor: '#4262be',
-                  alignItems: 'flex-end',
-                }}>
-                <FontAwesomeIcon icon={faUserCircle} color={'white'} />
-              </View>
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  color: 'white',
-                  padding: 6,
-                  fontSize: 22,
-                }}>
-                {'SignIn'}
+                  margin: 2,
+                  backgroundColor: '#4e73df',
+                  borderRadius: 4,
+                  borderWidth: 1,
+                  borderColor: '#4e73df',
+                }}
+                onPress={() => this.onSignInPress()}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    padding: 6,
+                    backgroundColor: '#4262be',
+                    alignItems: 'flex-end',
+                  }}>
+                  <FontAwesomeIcon icon={faUserCircle} color={'white'} />
+                </View>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    color: 'white',
+                    padding: 6,
+                    fontSize: 22,
+                  }}>
+                  {'SignIn'}
+                </Text>
+              </Pressable>
+            </View>
+            <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: 12,
+                // paddingVertical: 16,
+              }}>
+              <Text style={{fontSize: 22, color: 'blue'}}>
+                Forget password!
               </Text>
-            </Pressable>
-          </View>
-          <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingHorizontal: 12,
-              // paddingVertical: 16,
-            }}>
-            <Text style={{fontSize: 22, color: 'blue'}}>Forget password!</Text>
-          </View>
-        </Animated.View>
-      </SafeAreaView>
+            </View>
+          </Animated.View>
+        </SafeAreaView>
+      </ScrollView>
     );
   }
 }
