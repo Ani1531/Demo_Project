@@ -1,7 +1,21 @@
 export const MenuData = [
   {
-    key: 'menu001',
-    title: 'MENU_01',
-    data: [{key: 'submenu001', title: 'MENU_01', data: []}],
+    title: 'Expense Requisition',
+    data: ['Preparation', 'Approval', 'Authorization'],
+  },
+  {
+    title: 'Advance Requisition',
+    data: ['Preparation', 'Approval', 'Authorization'],
+  },
+  {title: 'Payable', data: ['Preparation', 'Authorization']},
+  {
+    title: 'Expense Bill',
+    data: [
+      'Preparation',
+      'Forwarding',
+      'Recommendation',
+      'Approval',
+      'Authorization',
+    ],
   },
 ];

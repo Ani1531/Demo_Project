@@ -5,7 +5,8 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
-import MenuContainer from './Components/MenuContainer';
+// import MenuContainer from './Components/MenuContainer';
+import DashBoardScreen from './Screens/DashBoardScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 import ProfileScreen from './Screens/ProfileScreen';
@@ -34,7 +35,7 @@ class App extends React.Component {
     return (
       <Stack.Navigator>
         {this.LoginScreen()}
-        {this.MenuContainer()}
+        {this.DashBoardScreen()}
         {this.ProfileScreen()}
       </Stack.Navigator>
     );
@@ -54,17 +55,18 @@ class App extends React.Component {
     );
   }
 
-  MenuContainer() {
+  DashBoardScreen() {
     return (
       <Stack.Screen
-        name="MenuContainer"
-        component={MenuContainer}
+        name="DashBoardScreen"
+        component={DashBoardScreen}
         options={{
           headerTitle: () => <Header />,
           headerStyle: {
             backgroundColor: 'white', //Set Header color
           },
           headerShown: true,
+          headerLeft: false,
           headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
         }}
@@ -83,6 +85,7 @@ class App extends React.Component {
             backgroundColor: 'white', //Set Header color
           },
           headerShown: true,
+          headerLeft: false,
           headerTitleAlign: 'center',
           ...TransitionPresets.SlideFromRightIOS,
         }}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, Modal, Pressable, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import HomeScreen from '../Screens/HomeScreen';
+// import HomeScreen from '../Screens/DashBoard';
 import ProfileScreen from '../Screens/ProfileScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';

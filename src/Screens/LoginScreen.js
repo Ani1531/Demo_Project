@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,12 +11,16 @@ import {
   TextInput,
   Pressable,
   Image,
+  Animated,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
 import LoaderSpinner from '../Components/LoaderSpinner';
+import {setBusy, setFree} from '../Redux/Action';
 
 class LoginScreen extends React.Component {
+  fadeAnim = new Animated.Value(0);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -22,14 +28,15 @@ class LoginScreen extends React.Component {
       password: '',
       showError: false,
       errormgs: 'INVALID USER ID AND PASSWORD',
-      showInputSection: false,
     };
   }
 
   componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({showInputSection: true});
-    }, 1000);
+    Animated.timing(this.fadeAnim, {
+      toValue: 1,
+      duration: 700,
+      useNativeDriver: true,
+    }).start();
   };
 
   onUserIdValueChange = data => {
@@ -40,16 +47,11 @@ class LoginScreen extends React.Component {
     this.setState({password: data, showError: false});
   };
 
-  setBusy = data => {
-    this.setState({showLoader: data});
-  };
-
   checkLogin = () => {
     let loginData = {
       loginId: this.state.userId,
       password: this.state.password,
     };
-    console.log('fetch data');
     fetch('http://192.168.29.9:8001/api/user/login', {
       method: 'post',
       headers: {
@@ -61,34 +63,40 @@ class LoginScreen extends React.Component {
       .then(result => {
         let userData = result.data.user;
         if (userData.login_user_name != 'Error') {
-          this.props.navigation.navigate('MenuContainer');
+          this.props.setFree();
+          this.props.navigation.navigate('DashBoardScreen');
         } else {
-          this.setState({
-            showError: true,
-            errormgs: 'INVALID USER ID AND PASSWORD',
-            userId: '',
-            password: '',
-          });
+          this.setState(
+            {
+              showError: true,
+              errormgs: 'INVALID USER ID AND PASSWORD',
+              userId: '',
+              password: '',
+            },
+            () => this.props.setFree(),
+          );
         }
-        console.log(JSON.stringify(data));
-        this.setBusy(false);
       })
       .catch(function (error) {
-        this.setBusy(false);
+        this.props.setFree();
         console.log('error', error);
       });
   };
 
   onSignInPress = () => {
-    this.setBusy(true);
+    this.props.setBusy();
     if (this.state.userId == '' || this.state.password == '') {
-      this.setState({
-        showError: true,
-        errormgs: 'PLEASE ENTER THE FEILDS',
-        userId: '',
-        password: '',
-      });
-      this.setBusy(false);
+      this.setState(
+        {
+          showError: true,
+          errormgs: 'PLEASE ENTER THE FEILDS',
+          userId: '',
+          password: '',
+        },
+        () => {
+          this.props.setFree();
+        },
+      );
     } else {
       this.checkLogin();
     }
@@ -116,6 +124,7 @@ class LoginScreen extends React.Component {
           <TextInput
             style={styles.input}
             // autoFocus={true}
+            secureTextEntry={true}
             value={this.state.password}
             onChangeText={value => this.onPasswordValueChange(value)}
             placeholder="Please Enter Password"
@@ -140,21 +149,21 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <LoaderSpinner />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: 4,
-          }}>
-          <Image
-            style={styles.tinyLogo}
-            source={require('../assets/logo/snib_logo.png')}
-          />
-        </View>
-        {this.state.showInputSection ? (
-          <>
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <LoaderSpinner />
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: 4,
+            }}>
+            <Image
+              style={styles.tinyLogo}
+              source={require('../assets/logo/snib_logo.png')}
+            />
+          </View>
+          <Animated.View style={[{opacity: this.fadeAnim}]}>
             <View
               style={{
                 justifyContent: 'center',
@@ -203,7 +212,7 @@ class LoginScreen extends React.Component {
                 </Text>
               </Pressable>
             </View>
-            <View style={{height: 1, backgroundColor: 'grey', marginTop: 10}} />
+            <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
             <View
               style={{
                 justifyContent: 'center',
@@ -211,13 +220,13 @@ class LoginScreen extends React.Component {
                 paddingHorizontal: 12,
                 // paddingVertical: 16,
               }}>
-              <Text style={{fontSize: 16, color: 'blue'}}>
+              <Text style={{fontSize: 22, color: 'blue'}}>
                 Forget password!
               </Text>
             </View>
-          </>
-        ) : null}
-      </SafeAreaView>
+          </Animated.View>
+        </SafeAreaView>
+      </ScrollView>
     );
   }
 }
@@ -228,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#dfe6e9',
-    paddingTop: 100,
+    paddingTop: 90,
   },
   input: {
     width: 280,
@@ -244,4 +253,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+function mapStateToProps(state) {
+  const {LoaderReducer} = state;
+  return {LoaderReducer};
+}
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({setBusy, setFree}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
