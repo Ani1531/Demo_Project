@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,13 +11,17 @@ import {
   TextInput,
   Pressable,
   Image,
+  Animated,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import LoaderSpinner from '../Components/LoaderSpinner';
+import {setBusy, setFree} from '../Redux/Action';
 
 class LoginScreen extends React.Component {
+  fadeAnim = new Animated.Value(0);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,14 +29,15 @@ class LoginScreen extends React.Component {
       password: '',
       showError: false,
       errormgs: 'INVALID USER ID AND PASSWORD',
-      showInputSection: false,
     };
   }
 
   componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({showInputSection: true});
-    }, 1000);
+    Animated.timing(this.fadeAnim, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
   };
 
   onUserIdValueChange = data => {
@@ -42,9 +49,12 @@ class LoginScreen extends React.Component {
   };
 
   onSignInPress = () => {
+    this.props.setBusy();
     if (this.state.userId == 'manoj' && this.state.password == 'manoj') {
+      this.props.setFree();
       this.props.navigation.navigate('MenuContainer');
     } else if (this.state.userId == '' || this.state.password == '') {
+      this.props.setFree();
       this.setState({
         showError: true,
         errormgs: 'PLEASE ENTER THE FEILDS',
@@ -52,6 +62,7 @@ class LoginScreen extends React.Component {
         password: '',
       });
     } else {
+      this.props.setFree();
       this.setState({
         showError: true,
         errormgs: 'INVALID USER ID AND PASSWORD',
@@ -120,70 +131,66 @@ class LoginScreen extends React.Component {
             source={require('../assets/logo/snib_logo.png')}
           />
         </View>
-        {this.state.showInputSection ? (
-          <>
-            <View
+        <Animated.View style={[{opacity: this.fadeAnim}]}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginVertical: 8,
+            }}>
+            <Text style={{fontSize: 26, color: 'black'}}>Sign In</Text>
+          </View>
+          {this.renderErrorMgs()}
+          {this.renderIDorPasswordInputBox()}
+          <View
+            style={{
+              width: 280,
+              paddingTop: 20,
+              paddingVertical: 16,
+            }}>
+            <Pressable
               style={{
+                flexDirection: 'row',
+                alignSelf: 'flex-end',
                 justifyContent: 'center',
-                alignItems: 'center',
-                marginVertical: 8,
-              }}>
-              <Text style={{fontSize: 26, color: 'black'}}>Sign In</Text>
-            </View>
-            {this.renderErrorMgs()}
-            {this.renderIDorPasswordInputBox()}
-            <View
-              style={{
-                width: 280,
-                paddingTop: 20,
-                paddingVertical: 16,
-              }}>
-              <Pressable
+                margin: 2,
+                backgroundColor: '#4e73df',
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: '#4e73df',
+              }}
+              onPress={() => this.onSignInPress()}>
+              <View
                 style={{
-                  flexDirection: 'row',
-                  alignSelf: 'flex-end',
                   justifyContent: 'center',
-                  margin: 2,
-                  backgroundColor: '#4e73df',
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderColor: '#4e73df',
-                }}
-                onPress={() => this.onSignInPress()}>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    padding: 6,
-                    backgroundColor: '#4262be',
-                    alignItems: 'flex-end',
-                  }}>
-                  <FontAwesomeIcon icon={faUserCircle} color={'white'} />
-                </View>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    color: 'white',
-                    padding: 6,
-                    fontSize: 22,
-                  }}>
-                  {'SignIn'}
-                </Text>
-              </Pressable>
-            </View>
-            <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 12,
-                paddingVertical: 16,
-              }}>
-              <Text style={{fontSize: 22, color: 'blue'}}>
-                Forget password!
+                  padding: 6,
+                  backgroundColor: '#4262be',
+                  alignItems: 'flex-end',
+                }}>
+                <FontAwesomeIcon icon={faUserCircle} color={'white'} />
+              </View>
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  color: 'white',
+                  padding: 6,
+                  fontSize: 22,
+                }}>
+                {'SignIn'}
               </Text>
-            </View>
-          </>
-        ) : null}
+            </Pressable>
+          </View>
+          <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: 12,
+              paddingVertical: 16,
+            }}>
+            <Text style={{fontSize: 22, color: 'blue'}}>Forget password!</Text>
+          </View>
+        </Animated.View>
       </SafeAreaView>
     );
   }
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#dfe6e9',
-    paddingTop: 100,
+    paddingTop: 90,
   },
   input: {
     width: 280,
@@ -211,4 +218,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+function mapStateToProps(state) {
+  const {LoaderReducer} = state;
+  return {LoaderReducer};
+}
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({setBusy, setFree}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

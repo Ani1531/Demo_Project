@@ -1,11 +1,13 @@
-export const setBusy = dispatch => {
-  dispatch({
+import {SET_BUSY, SET_FREE} from './ActionType';
+
+export const setBusy = () => {
+  return {
     type: SET_BUSY,
-  });
+  };
 };
 
-export const setFree = dispatch => {
-  dispatch({
+export const setFree = () => {
+  return {
     type: SET_FREE,
-  });
+  };
 };
