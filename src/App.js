@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle} from '@fortawesome/free-solid-svg-icons';
 // import MenuContainer from './Components/MenuContainer';
-import DashBoardScreen from './Screens/DashBoardScreen';
+import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 import ProfileScreen from './Screens/ProfileScreen';
@@ -35,7 +35,7 @@ class App extends React.Component {
     return (
       <Stack.Navigator>
         {this.LoginScreen()}
-        {this.DashBoardScreen()}
+        {this.HomeScreen()}
         {this.ProfileScreen()}
       </Stack.Navigator>
     );
@@ -55,11 +55,11 @@ class App extends React.Component {
     );
   }
 
-  DashBoardScreen() {
+  HomeScreen() {
     return (
       <Stack.Screen
-        name="DashBoardScreen"
-        component={DashBoardScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerTitle: () => <Header />,
           headerStyle: {

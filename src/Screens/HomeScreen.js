@@ -1,15 +1,18 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {StyleSheet, Text, View, Pressable} from 'react-native';
 import {MenuData} from '../Commons/Constant';
 
-class DashBoardScreen extends React.Component {
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      submenu2Type: [],
-      showSubmenu2: false,
-    };
+    this.state = {};
   }
+
+  componentDidMount = () => {
+    // console.log(JSON.stringify(this.props.MenuReducer));
+  };
 
   renderTabBars = () => {
     return MenuData.map((item, key) => (
@@ -29,20 +32,24 @@ class DashBoardScreen extends React.Component {
   };
 
   renderSubTabBars = () => {
-    return this.state.showSubmenu2 ? (
-      <View style={styles.subMenu}>
-        {this.state.submenu2Type.map((item, key) => (
-          <Pressable
-            key={key}
-            style={styles.tab2Style}
-            onPress={() => {
-              console.log(item);
-            }}>
-            <Text style={styles.tab2TextStyle}>{item}</Text>
-          </Pressable>
-        ))}
+    return (
+      <View style={{flex: 1}}>
+        {this.state.showSubmenu2 ? (
+          <View style={styles.submenu2Style}>
+            {this.state.submenu2Type.map((item, key) => (
+              <Pressable
+                key={key}
+                style={styles.tab2Style}
+                onPress={() => {
+                  console.log(item);
+                }}>
+                <Text style={styles.tab2TextStyle}>{item}</Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
       </View>
-    ) : null;
+    );
   };
 
   render() {
@@ -55,9 +62,16 @@ class DashBoardScreen extends React.Component {
           }}>
           <Text style={styles.dashTitle}>DASH BOARD</Text>
         </Pressable>
-        <View style={styles.subMenu}>{this.renderTabBars()}</View>
         <View style={{height: 12}} />
-        {this.renderSubTabBars()}
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}>
+          {this.renderSubTabBars()}
+          <View style={styles.subMenu}>{this.renderTabBars()}</View>
+        </View>
       </View>
     );
   }
@@ -84,14 +98,14 @@ const styles = StyleSheet.create({
   subMenu: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
     width: '100%',
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 8,
     backgroundColor: 'rgba(223, 230, 233,0.6)',
   },
   tabStyle: {
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     marginVertical: 8,
     backgroundColor: 'rgba(10, 189, 227,0.5)',
     borderRadius: 4,
@@ -117,7 +131,21 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  submenu2Style: {
+    flexWrap: 'wrap',
+    width: '100%',
+    flexDirection: 'row',
+    backgroundColor: 'red',
+    justifyContent: 'flex-start',
   },
 });
 
-export default DashBoardScreen;
+function mapStateToProps(state) {
+  const {MenuReducer} = state;
+  return {MenuReducer};
+}
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

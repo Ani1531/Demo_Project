@@ -16,7 +16,9 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
 import LoaderSpinner from '../Components/LoaderSpinner';
-import {setBusy, setFree} from '../Redux/Action';
+import {setBusy, setFree, setMenu} from '../Redux/Action';
+import requestMngr from '../Commons/RequestMngr';
+import localStorage from '../Commons/LocalStorage';
 
 class LoginScreen extends React.Component {
   fadeAnim = new Animated.Value(0);
@@ -52,19 +54,23 @@ class LoginScreen extends React.Component {
       loginId: this.state.userId,
       password: this.state.password,
     };
-    fetch('http://192.168.29.9:8001/api/user/login', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginData),
-    })
+    requestMngr
+      .getLogin(loginData)
       .then(res => res.json())
       .then(result => {
         let userData = result.data.user;
         if (userData.login_user_name != 'Error') {
           this.props.setFree();
-          this.props.navigation.navigate('DashBoardScreen');
+          requestMngr
+            .getMenu(result.data.token)
+            .then(res => res.json())
+            .then(result => {
+              this.props.setMenu(result);
+              this.props.navigation.navigate('HomeScreen');
+            })
+            .catch(function (error) {
+              console.log('error', error);
+            });
         } else {
           this.setState(
             {
@@ -258,6 +264,6 @@ function mapStateToProps(state) {
   return {LoaderReducer};
 }
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({setBusy, setFree}, dispatch);
+  bindActionCreators({setBusy, setFree, setMenu}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

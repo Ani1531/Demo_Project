@@ -1,20 +1,25 @@
-// import React from 'react';
-// import axios from 'axios';
+import {baseURL} from './Constant';
 
-// class RequestMngr extends React.Component {
-//   static axiosInstance = axios.create({
-//     baseURL: 'http://192.168.29.9:8001/api/user/login',
-//     timeout: 1000,
-//     headers: {'Content-Type': 'application/json'},
-//   });
+class RequestMngr {
+  getLogin = loginData => {
+    return fetch(baseURL + '/user/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginData),
+    });
+  };
 
-//   static getLogin = async data => {
-//     return await axiosInstance({
-//       body: JSON.stringify(data),
-//     });
-//   };
-// }
-
-// const rqstMnger = new RequestMngr();
-
-// export default rqstMnger;
+  getMenu = token => {
+    return fetch(baseURL + '/user/menu', {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  };
+}
+const requestMngr = new RequestMngr();
+export default requestMngr;
