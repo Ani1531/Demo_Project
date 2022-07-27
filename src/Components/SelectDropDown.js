@@ -5,6 +5,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 
 class SelectDropDown extends React.Component {
+  getSelectedValue = value => {
+    this.props.getSelectedValue(value);
+  };
+
   render() {
     return (
       <View style={styles.dropDownStyle}>
@@ -12,7 +16,7 @@ class SelectDropDown extends React.Component {
           style={{
             paddingHorizontal: 4,
             paddingBottom: 6,
-            fontSize: 16,
+            fontSize: 20,
             color: 'black',
           }}>
           {this.props.ButtonTitle}
@@ -20,13 +24,14 @@ class SelectDropDown extends React.Component {
         <SelectDropdown
           data={this.props.DATA}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
+            this.getSelectedValue(selectedItem);
           }}
           defaultButtonText={this.props.ButtonTitle}
+          defaultValue={this.props.defaultValue ?? null}
           search={true}
           buttonStyle={this.props.dropdownStyle}
           renderDropdownIcon={() => (
-            <FontAwesomeIcon size={16} icon={faCaretDown} color={'black'} />
+            <FontAwesomeIcon size={24} icon={faCaretDown} color={'black'} />
           )}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;

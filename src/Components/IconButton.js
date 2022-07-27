@@ -18,7 +18,8 @@ class IconButton extends React.Component {
         <View
           style={{
             justifyContent: 'center',
-            padding: 6,
+            paddingHorizontal: 12,
+            paddingVertical: 6,
             backgroundColor: this.props.IconBckgrdClr,
             alignItems: 'flex-end',
           }}>
@@ -32,7 +33,8 @@ class IconButton extends React.Component {
           style={{
             justifyContent: 'center',
             color: 'white',
-            padding: 6,
+            paddingHorizontal: 10,
+            paddingVertical: 6,
             fontSize: 24,
           }}>
           {this.props.BtnText}

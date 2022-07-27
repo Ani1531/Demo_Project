@@ -12,7 +12,7 @@ import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 import ProfileScreen from './Screens/ProfileScreen';
-import RequisitionFormScreen from './Components/RequisitionFormScreen';
+import RequisitionFormScreen from './Screens/RequisitionFormScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +35,7 @@ class App extends React.Component {
   installNavigator() {
     return (
       <Stack.Navigator>
-        {this.LoginScreen()}
+        {/* {this.LoginScreen()} */}
         {this.HomeScreen()}
         {this.RequisitionFormScreen()}
         {this.ProfileScreen()}

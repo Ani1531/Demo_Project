@@ -8,13 +8,18 @@ export default class DatePickerView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dateInput: this.props.dateData,
+      showDatePicker: false,
+      dateInput: new Date(),
     };
   }
 
+  openDatePicker = () => {
+    this.setState({showDatePicker: !this.state.showDatePicker});
+  };
+
   onDateChange = newDate => {
     this.setState({dateInput: newDate});
-    this.props.onDateChange(newDate);
+    this.props.onDateChange(this.getGateFormat(newDate));
   };
 
   getGateFormat = () => {
@@ -44,15 +49,15 @@ export default class DatePickerView extends React.Component {
               alignItems: 'center',
             }}
             onPress={() => {
-              this.props.openDatePicker();
+              this.openDatePicker();
             }}>
             <FontAwesomeIcon size={40} icon={faCalendarAlt} color={'#2e86de'} />
           </Pressable>
         ) : null}
         <DatePicker
           modal
-          open={this.props.showDatePicker}
-          date={this.props.dateData}
+          open={this.state.showDatePicker}
+          date={this.state.dateInput}
           onConfirm={date => {
             this.onDateChange(date);
           }}
@@ -77,6 +82,6 @@ const styles = StyleSheet.create({
   input: {
     width: '85%',
     padding: 10,
-    fontSize: 22,
+    fontSize: 20,
   },
 });

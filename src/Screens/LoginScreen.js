@@ -36,7 +36,7 @@ class LoginScreen extends React.Component {
   componentDidMount = () => {
     Animated.timing(this.fadeAnim, {
       toValue: 1,
-      duration: 700,
+      duration: 900,
       useNativeDriver: true,
     }).start();
   };
@@ -155,8 +155,8 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
           <LoaderSpinner />
           <View
             style={{
@@ -182,7 +182,7 @@ class LoginScreen extends React.Component {
             {this.renderIDorPasswordInputBox()}
             <View
               style={{
-                width: 280,
+                width: 290,
                 paddingTop: 20,
                 paddingVertical: 16,
               }}>
@@ -207,8 +207,8 @@ class LoginScreen extends React.Component {
               </Text>
             </View>
           </Animated.View>
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
