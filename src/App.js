@@ -1,5 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import {Provider} from 'react-redux';
+import {Store} from './Redux/Store';
 import {SafeAreaView, StyleSheet, Pressable, View} from 'react-native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -10,8 +12,7 @@ import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Header from './Components/Header';
 import ProfileScreen from './Screens/ProfileScreen';
-import {Provider} from 'react-redux';
-import {Store} from './Redux/Store';
+import RequisitionFormScreen from './Components/RequisitionFormScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ class App extends React.Component {
       <Stack.Navigator>
         {this.LoginScreen()}
         {this.HomeScreen()}
+        {this.RequisitionFormScreen()}
         {this.ProfileScreen()}
       </Stack.Navigator>
     );
@@ -74,6 +76,25 @@ class App extends React.Component {
     );
   }
 
+  RequisitionFormScreen() {
+    return (
+      <Stack.Screen
+        name="RequisitionFormScreen"
+        component={RequisitionFormScreen}
+        options={{
+          headerTitle: () => <Header />,
+          headerStyle: {
+            backgroundColor: 'white', //Set Header color
+          },
+          headerShown: true,
+          headerLeft: false,
+          headerTitleAlign: 'center',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+    );
+  }
+
   ProfileScreen() {
     return (
       <Stack.Screen
@@ -98,7 +119,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
   },
 });
 

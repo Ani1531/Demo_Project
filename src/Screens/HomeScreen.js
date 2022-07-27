@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
                 key={key}
                 style={styles.tab2Style}
                 onPress={() => {
-                  console.log(item);
+                  this.onClickAction(item);
                 }}>
                 <Text style={styles.tab2TextStyle}>{item}</Text>
               </Pressable>
@@ -75,6 +75,12 @@ class HomeScreen extends React.Component {
       </View>
     );
   }
+
+  onClickAction = item => {
+    if (item == 'Preparation') {
+      this.props.navigation.navigate('RequisitionFormScreen');
+    }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -137,7 +143,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
     flexDirection: 'row',
-    backgroundColor: 'red',
     justifyContent: 'flex-start',
   },
 });

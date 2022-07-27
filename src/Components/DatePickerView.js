@@ -26,23 +26,29 @@ export default class DatePickerView extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainStyle}>
+      <View
+        style={[
+          styles.mainStyle,
+          {backgroundColor: this.props.isDisabled ? '#b2bec3' : null},
+        ]}>
         <TextInput
           style={styles.input}
           value={this.getGateFormat()}
           onChangeText={value => console.log('someting chnage')}
         />
-        <Pressable
-          style={{
-            width: '15%',
-            alignContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => {
-            this.props.openDatePicker();
-          }}>
-          <FontAwesomeIcon size={40} icon={faCalendarAlt} color={'#74b9ff'} />
-        </Pressable>
+        {!this.props.isDisabled ? (
+          <Pressable
+            style={{
+              width: '15%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              this.props.openDatePicker();
+            }}>
+            <FontAwesomeIcon size={40} icon={faCalendarAlt} color={'#2e86de'} />
+          </Pressable>
+        ) : null}
         <DatePicker
           modal
           open={this.props.showDatePicker}
@@ -64,7 +70,8 @@ const styles = StyleSheet.create({
   mainStyle: {
     height: 50,
     flexDirection: 'row',
-    margin: 12,
+    marginHorizontal: 12,
+    marginVertical: 4,
     borderWidth: 1,
   },
   input: {

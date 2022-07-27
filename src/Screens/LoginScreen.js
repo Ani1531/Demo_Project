@@ -18,7 +18,7 @@ import {faUserCircle, faUserLock} from '@fortawesome/free-solid-svg-icons';
 import LoaderSpinner from '../Components/LoaderSpinner';
 import {setBusy, setFree, setMenu} from '../Redux/Action';
 import requestMngr from '../Commons/RequestMngr';
-import localStorage from '../Commons/LocalStorage';
+import IconButton from '../Components/IconButton';
 
 class LoginScreen extends React.Component {
   fadeAnim = new Animated.Value(0);
@@ -186,37 +186,13 @@ class LoginScreen extends React.Component {
                 paddingTop: 20,
                 paddingVertical: 16,
               }}>
-              <Pressable
-                style={{
-                  flexDirection: 'row',
-                  alignSelf: 'flex-end',
-                  justifyContent: 'center',
-                  margin: 2,
-                  backgroundColor: '#4e73df',
-                  borderRadius: 4,
-                  borderWidth: 1,
-                  borderColor: '#4e73df',
-                }}
-                onPress={() => this.onSignInPress()}>
-                <View
-                  style={{
-                    justifyContent: 'center',
-                    padding: 6,
-                    backgroundColor: '#4262be',
-                    alignItems: 'flex-end',
-                  }}>
-                  <FontAwesomeIcon icon={faUserCircle} color={'white'} />
-                </View>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    color: 'white',
-                    padding: 6,
-                    fontSize: 22,
-                  }}>
-                  {'SignIn'}
-                </Text>
-              </Pressable>
+              <IconButton
+                BtnText={'SignIn'}
+                IconName={faUserCircle}
+                TxtBckgrdClr={'#4e73df'}
+                IconBckgrdClr={'#4262be'}
+                Action={this.onSignInPress}
+              />
             </View>
             <View style={{height: 1, backgroundColor: 'grey', marginTop: 20}} />
             <View
