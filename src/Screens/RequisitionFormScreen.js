@@ -35,7 +35,7 @@ class RequisitionFormScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reqNO: '',
+      reqNO: '00',
       reqData: '',
       forDate: '',
       department: '',
@@ -160,7 +160,9 @@ class RequisitionFormScreen extends React.Component {
                 <View style={{width: '35%'}}>
                   <Text style={styles.inputTitleStyle}>Requisition No</Text>
                 </View>
-                <Text style={styles.inputTitleStyle}>{this.state.reqNO}</Text>
+                <Text style={[styles.input, {borderWidth: 0}]}>
+                  {this.state.reqNO}
+                </Text>
               </View>
               <View style={styles.maineach}>
                 <View style={{width: '35%'}}>
