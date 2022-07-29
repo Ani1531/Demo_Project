@@ -73,9 +73,10 @@ export default class DatePickerView extends React.Component {
 
 const styles = StyleSheet.create({
   mainStyle: {
+    width: 260,
     height: 50,
     flexDirection: 'row',
-    marginHorizontal: 12,
+    // marginHorizontal: 12,
     marginVertical: 4,
     borderWidth: 1,
   },

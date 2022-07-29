@@ -12,15 +12,17 @@ class SelectDropDown extends React.Component {
   render() {
     return (
       <View style={styles.dropDownStyle}>
-        <Text
-          style={{
-            paddingHorizontal: 4,
-            paddingBottom: 6,
-            fontSize: 20,
-            color: 'black',
-          }}>
-          {this.props.ButtonTitle}
-        </Text>
+        <View style={{width: '35%'}}>
+          <Text
+            style={{
+              paddingHorizontal: 4,
+              paddingBottom: 6,
+              fontSize: 20,
+              color: 'black',
+            }}>
+            {this.props.ButtonTitle}
+          </Text>
+        </View>
         <SelectDropdown
           data={this.props.DATA}
           onSelect={(selectedItem, index) => {
@@ -47,10 +49,11 @@ class SelectDropDown extends React.Component {
 
 const styles = StyleSheet.create({
   dropDownStyle: {
-    width: '100%',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 12,
-    paddingTop: 12,
+    paddingHorizontal: 4,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 
